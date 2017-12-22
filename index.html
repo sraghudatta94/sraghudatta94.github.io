@@ -1,67 +1,136 @@
 <!DOCTYPE html>
 <html>
 <body onload="setAttributes()">
-<input id="train_number" placeholder="Enter train number"/>
-<input type="date" id="train_date">
-<h2 id="train_name">Vasudeva</h2>
-<h2 id="train_next_location">Enter details to get live tracking</h2>
-<h2 id="train_location"></h2>
-<h2 id="demo"></h2>
+    <input id="train_number" placeholder="Enter train number" />
+    <input type="date" id="train_date">
+    <h2 id="train_name">Vasudeva</h2>
+    <h2 id="train_next_location">Enter details to get live tracking</h2>
+    <h2 id="train_location"></h2>
+    <h2 id="demo"></h2>
 
-<button type="button" onclick="loadDoc()">Request data</button>
+    <button type="button" onclick="loadDoc()">Request data</button>
 
-<p id="demo"></p>
+    <p id="demo"></p>
+    <ul id="myList">
+        <li>12433---> MAS-NZM RAJDHANI EXP</li>
+        <li>12509---> SBC -GHY EXP</li>
+        <li>
+            12509---> 12269---> MAS-NZM DURANTO EXP
+        </li>
+        <li>
+            12077---> MAS-BZA JAN SHATABDI EXP
+        </li>
+        <li>
+            12842---> COROMANDEL EXP
+        </li>
+        <li>
+            12656---> NAVAJEEVAN EXP
+        </li>
+        <li>12509---> SHALIMAR EXP</li>
+        <li>
+            22641---> SHALIMAR EXP
+        </li>
+        <li>
+            12712---> MAS-BZA PINAKINI EXP
+        </li>
+        <li>
+            12295---> SBC-PPTA SANGHAMITRA EXP
+        </li>
+        <li>
+            17643---> CGL-COA CIRCAR EXP
+        </li>
+        <li>
+            12969---> CBE JAIPUR EXP
+        </li>
+        <li>
+            12759---> MAS-HYB CHARMINAR EXP
+            P
+        </li>
+        <li>
+            12615---> MAS-NDLS GRAND TRUNK EXP
+        </li>
+        <li>
+            12829---> CEN-BBS WEEKLY EXP
+        </li>
+        </li>
+        <li>
+            12664---> TPJ-HWH EXP
 
-<script>
-function loadDoc() {
-if(document.getElementById("train_number").value == ""){
-	document.getElementById("train_next_location").innerHTML = "Enter train number";
-}
-else{
-document.getElementById("train_next_location").innerHTML = "Please wait data loading.....";
-var date_input = document.getElementById("train_date").value;
-console.log("Date input :"+date_input);
-var res = date_input.split("-");
-date_input=res[2]+"-"+res[1]+"-"+res[0];
-var train_input = document.getElementById("train_number").value;
-console.log("Train number :"+train_input);
-var url1 ="https://api.railwayapi.com/v2/live/train/"+train_input+"/date/"+date_input+"/apikey/rn5mt9ogj8/";
-console.log(url1);
-var url ="https://api.railwayapi.com/v2/live/train/17210/date/22-12-2017/apikey/rn5mt9ogj8/";
+        </li>
+        </li>
+        <li>
+            12621---> MAS-NDLS TAMIL NADU EXP
 
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      
-      var obj = JSON.parse(this.response);
-      if(obj.train.name == null){
-      document.getElementById("train_next_location").innerHTML = "Enter valid train number";
-      }
-      else{
-      document.getElementById("demo").innerHTML = "Current Status : "+obj.position;
-      document.getElementById("train_name").innerHTML = "Train Name : "+obj.train.name;
-      document.getElementById("train_location").innerHTML = "Current Location : "+obj.current_station.name;
-      document.getElementById("train_next_location").innerHTML = "Current Date : "+obj.start_date;
-      }
-      
-      
-    }
-  };
-  xhttp.open("GET",url1, true);
-  xhttp.send();
-}
+        </li>
+        </li>
+        <li>
+            13352---> ALLEPY-DHANBAD EXPRESS
 
-}
-</script>
-<script>
-function setAttributes(){
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-console.log(date);
-      document.getElementById("train_date").value = date;
-}
 
-</script>
- 
+        </li>
+        </li>
+        <li>
+            12522---> RAPTI SAGAR EXP.
+
+
+        </li>
+        </li>
+        <li>
+            12840---> MAS-HWH MAIL
+
+        </li>
+    </ul>
+
+    <script>
+        function loadDoc() {
+            if (document.getElementById("train_number").value == "") {
+                document.getElementById("train_next_location").innerHTML = "Enter train number";
+            }
+            else {
+                document.getElementById("train_next_location").innerHTML = "Please wait data loading.....";
+                var date_input = document.getElementById("train_date").value;
+                console.log("Date input :" + date_input);
+                var res = date_input.split("-");
+                date_input = res[2] + "-" + res[1] + "-" + res[0];
+                var train_input = document.getElementById("train_number").value;
+                console.log("Train number :" + train_input);
+                var url1 = "https://api.railwayapi.com/v2/live/train/" + train_input + "/date/" + date_input + "/apikey/rn5mt9ogj8/";
+                console.log(url1);
+                var url = "https://api.railwayapi.com/v2/live/train/17210/date/22-12-2017/apikey/rn5mt9ogj8/";
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+
+                        var obj = JSON.parse(this.response);
+                        if (obj.train.name == null) {
+                            document.getElementById("train_next_location").innerHTML = "Enter valid train number";
+                        }
+                        else {
+                            document.getElementById("demo").innerHTML = "Current Status : " + obj.position;
+                            document.getElementById("train_name").innerHTML = "Train Name : " + obj.train.name;
+                            document.getElementById("train_location").innerHTML = "Current Location : " + obj.current_station.name;
+                            document.getElementById("train_next_location").innerHTML = "Current Date : " + obj.start_date;
+                        }
+
+
+                    }
+                };
+                xhttp.open("GET", url1, true);
+                xhttp.send();
+            }
+
+        }
+    </script>
+    <script>
+        function setAttributes() {
+            var today = new Date();
+            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            console.log(date);
+            document.getElementById("train_date").value = date;
+        }
+
+    </script>
+
 </body>
 </html>
