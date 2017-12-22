@@ -1,1 +1,34 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name="theme-color" content="#000000"><link rel="manifest" href="/manifest.json"><link rel="shortcut icon" href="/favicon.ico"><title>React App</title><link href="/static/css/main.c17080f1.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div><script type="text/javascript" src="/static/js/main.8da240ef.js"></script></body></html>
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2 id="train_name">Vasudeva</h2>
+<h2 id="train_next_location">For Thugo Jaffa</h2>
+<h2 id="train_location">Check Train Status</h2>
+<h2 id="demo"></h2>
+
+<button type="button" onclick="loadDoc()">Request data</button>
+
+<p id="demo"></p>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      
+      var obj = JSON.parse(this.response);
+      console.log(obj.position);
+      document.getElementById("demo").innerHTML = "Current Status : "+obj.position;
+      document.getElementById("train_name").innerHTML = "Train Name : "+obj.train.name;
+      document.getElementById("train_location").innerHTML = "Current Location : "+obj.current_station.name;
+      document.getElementById("train_next_location").innerHTML = "Current Location : "+obj.start_date;
+    }
+  };
+  xhttp.open("GET", "https://api.railwayapi.com/v2/live/train/17210/date/22-12-2017/apikey/rn5mt9ogj8/", true);
+  xhttp.send();
+}
+</script>
+ 
+</body>
+</html>
