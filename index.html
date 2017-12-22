@@ -14,6 +14,10 @@
 
 <script>
 function loadDoc() {
+if(document.getElementById("train_number").value == ""){
+	document.getElementById("train_next_location").innerHTML = "Enter train number";
+}
+else{
 document.getElementById("train_next_location").innerHTML = "Please wait data loading.....";
 var date_input = document.getElementById("train_date").value;
 console.log("Date input :"+date_input);
@@ -30,16 +34,23 @@ var url ="https://api.railwayapi.com/v2/live/train/17210/date/22-12-2017/apikey/
     if (this.readyState == 4 && this.status == 200) {
       
       var obj = JSON.parse(this.response);
-     
+      if(obj.train.name == null){
+      document.getElementById("train_next_location").innerHTML = "Enter valid train number";
+      }
+      else{
       document.getElementById("demo").innerHTML = "Current Status : "+obj.position;
       document.getElementById("train_name").innerHTML = "Train Name : "+obj.train.name;
       document.getElementById("train_location").innerHTML = "Current Location : "+obj.current_station.name;
       document.getElementById("train_next_location").innerHTML = "Current Date : "+obj.start_date;
+      }
+      
       
     }
   };
   xhttp.open("GET",url1, true);
   xhttp.send();
+}
+
 }
 </script>
 <script>
