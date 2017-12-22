@@ -22,7 +22,7 @@ function loadDoc() {
       document.getElementById("demo").innerHTML = "Current Status : "+obj.position;
       document.getElementById("train_name").innerHTML = "Train Name : "+obj.train.name;
       document.getElementById("train_location").innerHTML = "Current Location : "+obj.current_station.name;
-      document.getElementById("train_next_location").innerHTML = "Current Location : "+obj.start_date;
+      document.getElementById("train_next_location").innerHTML = "Date : "+obj.start_date;
     }
   };
   xhttp.open("GET", "https://api.railwayapi.com/v2/live/train/17210/date/22-12-2017/apikey/rn5mt9ogj8/", true);
