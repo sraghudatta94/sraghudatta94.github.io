@@ -4,8 +4,8 @@
 <input id="train_number" placeholder="Enter train number"/>
 <input type="date" id="train_date">
 <h2 id="train_name">Vasudeva</h2>
-<h2 id="train_next_location">For Thugo Jaffa</h2>
-<h2 id="train_location">Check Train Status</h2>
+<h2 id="train_next_location">Enter details to get live tracking</h2>
+<h2 id="train_location"></h2>
 <h2 id="demo"></h2>
 
 <button type="button" onclick="loadDoc()">Request data</button>
@@ -14,6 +14,7 @@
 
 <script>
 function loadDoc() {
+document.getElementById("train_next_location").innerHTML = "Please wait data loading.....";
 var date_input = document.getElementById("train_date").value;
 console.log("Date input :"+date_input);
 var res = date_input.split("-");
