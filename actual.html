@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<body onload="setAttributes()">
+    <input id="train_number" placeholder="Enter train number" />
+    <input type="date" id="train_date" readonly>
+    <h2 id="train_name">Vasudeva</h2>
+    <h2 id="train_next_location">Enter details to get live tracking</h2>
+    <h2 id="train_location"></h2>
+    <h2 id="demo"></h2>
+
+    <button type="button" onclick="loadDoc()">Request data</button>
+
+    <p id="demo"></p>
+    <script>
+        function loadDoc() {
+            if (document.getElementById("train_number").value == "") {
+                document.getElementById("train_next_location").innerHTML = "Enter train number";
+            }
+            else {
+                document.getElementById("train_next_location").innerHTML = "Please wait data loading.....";
+                var date_input = document.getElementById("train_date").value;
+                console.log("Date input :" + date_input);
+                var res = date_input.split("-");
+                date_input = res[2] + "-" + res[1] + "-" + res[0];
+                var train_input = document.getElementById("train_number").value;
+                console.log("Train number :" + train_input);
+                var url1 = "https://api.railwayapi.com/v2/live/train/" + train_input + "/date/" + date_input + "/apikey/rn5mt9ogj8/";
+                console.log(url1);
+                var url = "https://api.railwayapi.com/v2/live/train/17210/date/22-12-2017/apikey/rn5mt9ogj8/";
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+
+                        var obj = JSON.parse(this.response);
+                        if (obj.train.name == null) {
+                            document.getElementById("train_next_location").innerHTML = "Enter valid train number";
+                        }
+                        else {
+                            document.getElementById("demo").innerHTML = "Current Status : " + obj.position;
+                            document.getElementById("train_name").innerHTML = "Train Name : " + obj.train.name;
+                            document.getElementById("train_location").innerHTML = "Current Location : " + obj.current_station.name;
+                            document.getElementById("train_next_location").innerHTML = "Current Date : " + obj.start_date;
+                        }
+
+
+                    }
+                };
+                xhttp.open("GET", url1, true);
+                xhttp.send();
+            }
+
+        }
+    </script>
+    <script>
+        function setAttributes() {
+            var today = new Date();
+            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            console.log(date);
+            document.getElementById("train_date").value = date;
+        }
+
+    </script>
+
+</body>
+</html>
