@@ -7,64 +7,63 @@
 	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
-  <link rel="stylesheet" href="css/form.css">
-  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 	<script src="js/modernizr.js"></script>
-  <script src="js/form.js"></script> <!-- Modernizr -->
-
-	<title>Live Status | Train Helper</title>
-	<script>
-			function loadDoc() {
-					if (document.getElementById("train_number").value == "") {
-							document.getElementById("train_next_location").innerHTML = "Enter train number";
-					}
-					else {
-							document.getElementById("train_next_location").innerHTML = "Please wait data loading.....";
-							var date_input = document.getElementById("train_date").value;
-							console.log("Date input :" + date_input);
-							var res = date_input.split("-");
-							date_input = res[2] + "-" + res[1] + "-" + res[0];
-							var train_input = document.getElementById("train_number").value;
-							console.log("Train number :" + train_input);
-							var url1 = "https://api.railwayapi.com/v2/live/train/" + train_input + "/date/" + date_input + "/apikey/rn5mt9ogj8/";
-							console.log(url1);
-							var url = "https://api.railwayapi.com/v2/live/train/17210/date/22-12-2017/apikey/rn5mt9ogj8/";
-
-							var xhttp = new XMLHttpRequest();
-							xhttp.onreadystatechange = function () {
-									if (this.readyState == 4 && this.status == 200) {
-
-											var obj = JSON.parse(this.response);
-											if (obj.train.name == null) {
-													document.getElementById("train_next_location").innerHTML = "Enter valid train number";
-											}
-											else {
-													document.getElementById("demo").innerHTML = "Current Status : " + obj.position;
-													document.getElementById("train_name").innerHTML = "Train Name : " + obj.train.name;
-													document.getElementById("train_location").innerHTML = "Current Location : " + obj.current_station.name;
-													document.getElementById("train_next_location").innerHTML = "Current Date : " + obj.start_date;
-											}
-
-
-									}
-							};
-							xhttp.open("GET", url1, true);
-							xhttp.send();
-					}
-
-			}
-	</script>
-	<script>
-			function setAttributes() {
-					var today = new Date();
-					var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-					console.log(date);
-					document.getElementById("train_date").value = date;
-			}
-
-	</script>
+	<script src="js/main.js"></script><!-- Modernizr -->
+  <link rel="stylesheet" href="css/form.css">
+	<title>Train Helper</title>
 </head>
-<body >
+<script>
+		function loadDoc() {
+				if (document.getElementById("train_number").value == "") {
+						document.getElementById("train_next_location").innerHTML = "Enter train number";
+				}
+				else {
+						document.getElementById("train_heading").innerHTML = "Please wait data loading.....";
+						var date_input = document.getElementById("train_date").value;
+						console.log("Date input :" + date_input);
+						var res = date_input.split("-");
+						date_input = res[2] + "-" + res[1] + "-" + res[0];
+						var train_input = document.getElementById("train_number").value;
+						console.log("Train number :" + train_input);
+						var url1 = "https://api.railwayapi.com/v2/live/train/" + train_input + "/date/" + date_input + "/apikey/rn5mt9ogj8/";
+						console.log(url1);
+						var url = "https://api.railwayapi.com/v2/live/train/17210/date/22-12-2017/apikey/rn5mt9ogj8/";
+
+						var xhttp = new XMLHttpRequest();
+						xhttp.onreadystatechange = function () {
+								if (this.readyState == 4 && this.status == 200) {
+
+										var obj = JSON.parse(this.response);
+										if (obj.train.name == null) {
+												document.getElementById("train_next_location").innerHTML = "Enter valid train number";
+										}
+										else {
+												document.getElementById("train_status_table").innerHTML = obj.position;
+												document.getElementById("train_name_table").innerHTML = obj.train.name;
+												document.getElementById("train_location_table").innerHTML = obj.current_station.name;
+												document.getElementById("train_data-table").innerHTML = obj.start_date;
+												document.getElementById("train_heading").innerHTML = "Live Status Loaded succesfully";
+										}
+
+
+								}
+						};
+						xhttp.open("GET", url1, true);
+						xhttp.send();
+				}
+
+		}
+</script>
+<script>
+		function setAttributes() {
+				var today = new Date();
+				var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+				console.log(date);
+				document.getElementById("train_date").value = date;
+		}
+
+</script>
+<body>
 <header>
 	<nav class="cd-stretchy-nav">
 		<a class="cd-nav-trigger" href="#0">
@@ -94,30 +93,59 @@
 </header>
 
 <main class="cd-main-content">
+	<form id="contact-form">
+		<div class="container">
+		<h1 id="train_heading">Live Status</h1>
+		<div class="contact">
 
+			<div class="right-w3">
 
-<div id="contact-form">
-  <p>Vasudeva User,</p><br/>
-	<p>Please Enter Train number below</p><br/>
-  <p>Date
-    <label for="your-name">is</label>
-    <input type="text" name="your-name" id="train_date" minlength="3" placeholder="Date" readonly> and </p><p>Train Number is <input type="text" id="train_number" placeholder="Train Number" required></p>
+				<table class="table-fill">
 
+<tbody class="table-hover">
+<tr>
+<td class="text-left">Train Name</td>
+<td class="text-left" id="train_name_table"></td>
+</tr>
+<tr>
+<td class="text-left" >Current Date</td>
+<td class="text-left" id="train_data-table"></td>
+</tr>
+<tr>
+<td class="text-left">Current Location</td>
+<td class="text-left" id ="train_location_table"></td>
+</tr>
+<tr>
+<td class="text-left" >Current Status</td>
+<td class="text-left" id="train_status_table"></td>
+</tr>
 
-  <p>
-    <button onclick="loadDoc()">
-      <svg version="1.1" class="send-icn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="36px" viewBox="0 0 100 36" enable-background="new 0 0 100 36" xml:space="preserve">
-        <path d="M100,0L100,0 M23.8,7.1L100,0L40.9,36l-4.7-7.5L22,34.8l-4-11L0,30.5L16.4,8.7l5.4,15L23,7L23.8,7.1z M16.8,20.4l-1.5-4.3
-	l-5.1,6.7L16.8,20.4z M34.4,25.4l-8.1-13.1L25,29.6L34.4,25.4z M35.2,13.2l8.1,13.1L70,9.9L35.2,13.2z" />
-      </svg>
-      <small>send</small>
-    </button>
-  </p>
+</tbody>
+</table>
 </div>
-<h2 id="train_name">Vasudeva</h2>
-<h2 id="train_next_location">Enter details to get live tracking</h2>
-<h2 id="train_location"></h2>
-<h2 id="demo"></h2>
+			<form action="#" method="post">
+				<div class="left">
+					<div class="name">
+						<i class="fa fa-user" aria-hidden="true"></i>
+						<input type="text" name="name" id ="train_number" class="name" placeholder="Train Number" required="">
+					</div>
+					<div class="email">
+						<i class="fa fa-envelope" ></i>
+						<input type="text" id="train_date" name="train_date" class="email" placeholder="Date" readonly>
+					</div>
+
+					<input type ="button" value="Request Data" onclick="loadDoc()">
+				</div>
+			</form>
+			<div class="clear"></div>
+		</div>
+		<div class="footer-w3l">
+			<p class="agileinfo"> &copy; 2018 Raghu Datta . All Rights Reserved | Design by Raghu Datta</p>
+		</div>
+
+	</div>
+
+	</form>
 </main>
 
 
